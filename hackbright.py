@@ -37,22 +37,22 @@ def get_student_by_github(github):
     print "Student: %s %s\nGithub account: %s" % (row[0], row[1], row[2])
 
 
-def make_new_student(first_name, last_name, github):
+def make_new_student(first_name2, last_name, github):
     """Add a new student and print confirmation.
 
     Given a first name, last name, and GitHub account, add student to the
     database and print a confirmation message.
     """
 
-    QUERY = """ INSERT INTO Students VALUES (:first_name, :last_name, :github)"""
-    db_cursor = db.session.execute(QUERY, {'first_name': first_name, 'last_name': last_name, 'github': github})
+    QUERY = """ INSERT INTO Students VALUES (:first_name1, :last_name, :github)"""
+    db_cursor = db.session.execute(QUERY, {'first_name1': first_name2, 'last_name': last_name, 'github': github})
     db.session.commit()
-    print "Successfully added student: %s %s" % (first_name, last_name)
+    print "Successfully added student: %s %s" % (first_name2, last_name)
 
 
 def get_project_by_title(title):
     """Given a project title, print information about the project."""
-    QUERY = """SELECT :title, description FROM projects
+    QUERY = """SELECT title, description FROM projects where title = :title
             """
     db_cursor = db.session.execute(QUERY, {'title': title})
     row = db_cursor.fetchone()
@@ -105,7 +105,7 @@ def handle_input():
             github = args[0]
             title = args[1]
             get_grade_by_github_title(github, title)
-            
+
         elif command =="assign_grade":
             github = args[0]
             title = args[1]
